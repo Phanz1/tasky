@@ -1,0 +1,3 @@
+echo '@tailwind base;' > task_dashboard/static/css/tailwind.css
+echo '@tailwind components;' >> task_dashboard/static/css/tailwind.css
+echo '@tailwind utilities;' >> task_dashboard/static/css/tailwind.css

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ task.title }}</h2>
+    <p>Description: {{ task.description }}</p>
+    <p>Status: {{ task.status }}</p>
+    <p>Due Date: {{ task.due_date }}</p>
+    <p>Assigned to: {{ task.assigned_to }}</p>
+    <p>Created by: {{ task.created_by }}</p>
+    <p>Priority: {{ task.priority }}</p>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    <a href="{% url 'edit_task' task.id %}" class="btn btn-primary">Edit Task</a>
+{% endblock %}

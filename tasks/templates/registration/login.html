@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Login</h2>
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        <div class="space-y-2">
+            <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" name="username" autofocus required id="id_username" class="w-full px-3 py-2 border rounded">
+        </div>
+        <div class="space-y-2">
+            <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" required id="id_password" class="w-full px-3 py-2 border rounded">
+        </div>
+        <div class="flex items-center justify-between mt-8">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                Login
+            </button>
+            <a href="{% url 'password_reset' %}" class="text-sm text-gray-600 hover:text-gray-900">
+                Forgot your password?
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

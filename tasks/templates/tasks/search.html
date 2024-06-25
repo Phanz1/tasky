@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Search Tasks</h2>
+
+<form method="get" action="{% url 'task_search' %}">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search tasks...">
+    
+    <select name="status">
+        <option value="">All Statuses</option>
+        {% for status, label in status_choices %}
+            <option value="{{ status }}" {% if status == status_filter %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    
+    <select name="sort">
+        <option value="title" {% if sort == 'title' %}selected{% endif %}>Title</option>
+        <option value="-created_at" {% if sort == '-created_at' %}selected{% endif %}>Newest</option>
+        <option value="due_date" {% if sort == 'due_date' %}selected{% endif %}>Due Date</option>
+    </select>
+    
+    <button type="submit">Search</button>
+</form>
+
+{% if tasks %}
+    <ul>
+    {% for task in tasks %}
+        <li>
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description|truncatewords:20 }}</p>
+            <p>Status: {{ task.get_status_display }}</p>
+            <p>Due: {{ task.due_date }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if tasks.has_previous %}
+                <a href="?q={{ query }}&status={{ status_filter }}&sort={{ sort }}&page=1">&laquo; first</a>
+                <a href="?q={{ query }}&status={{ status_filter }}&sort={{ sort }}&page={{ tasks.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
+            </span>
+
+            {% if tasks.has_next %}
+                <a href="?q={{ query }}&status={{ status_filter }}&sort={{ sort }}&page={{ tasks.next_page_number }}">next</a>
+                <a href="?q={{ query }}&status={{ status_filter }}&sort={{ sort }}&page={{ tasks.paginator.num_pages }}">last &raquo;</a>
+                <a href="{% url 'task_search' %}">Search Tasks</a>
+            {% endif %}
+        </span>
+    </div>
+{% else %}
+    <p>No tasks found.</p>
+{% endif %}
+{% endblock %}
